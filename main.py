@@ -1,25 +1,37 @@
+#test
+
 #Libraries import
 import RPi.GPIO as GPIO
 import time
 from ultrasuoni import get_distance
-import concurrent.futures
+from motori import *
+
+debug=False
 
 #GPIO configuration
 GPIO.setmode(GPIO.BCM)
 
 #Ultrasound sensors
 #Sensor 1
-TRIG_PIN_1= 17
-ECHO_PIN_1= 14
+TRIG_PIN_1 = 17
+ECHO_PIN_1 = 14
 
 #Sensor 2
-TRIG_PIN_2= 27
-ECHO_PIN_2= 15
+TRIG_PIN_2 = 27
+ECHO_PIN_2 = 15
 
 #Sensor 3
-TRIG_PIN_3= 22
-ECHO_PIN_3= 18
+TRIG_PIN_3 = 22
+ECHO_PIN_3 = 18
 
+#Encoders
+#Encoder 1
+ENC1_F1 = 25
+ENC1_F2 = 8
+
+#Encoder 2
+ENC2_F1 = 1
+ENC2_F2 = 7
 
 #Setting all I/O
 #Ultrasound sensors
@@ -35,26 +47,37 @@ GPIO.setup(ECHO_PIN_2, GPIO.IN)
 GPIO.setup(TRIG_PIN_3, GPIO.OUT)
 GPIO.setup(ECHO_PIN_3, GPIO.IN)
 
+#Encoders
+#Encoder 1
+GPIO.setup(ENC1_F1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(ENC1_F2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+#Encoder 2
+GPIO.setup(ENC2_F1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(ENC2_F2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+#Interrupt
+#Count function is the function inside motori.py that counts how many times the encoder raises it's value
+#Encoder 1
+GPIO.add_event_detect(ENC1_F1, GPIO.RISING, callback=count_function)
+GPIO.add_event_detect(ENC1_F2, GPIO.RISING, callback=count_function)
+
+#Encoder 2
+GPIO.add_event_detect(ENC2_F1, GPIO.RISING, callback=count_function)
+GPIO.add_event_detect(ENC2_F2, GPIO.RISING, callback=count_function)
 
 if __name__ == "__main__":
     while True:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            thread_ultrasound1=executor.submit(get_distance, TRIG_PIN_1, ECHO_PIN_1)
-            result1 = thread_ultrasound1.result()
-        
-            print(f"\nSensore 1: {result1}")
+        result1= get_distance(TRIG_PIN_1,ECHO_PIN_1)
+        result2= get_distance(TRIG_PIN_2,ECHO_PIN_2)
+        result3= get_distance(TRIG_PIN_3,ECHO_PIN_3)
 
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            thread_ultrasound2=executor.submit(get_distance, TRIG_PIN_2, ECHO_PIN_2)
-            result2 = thread_ultrasound2.result()
-        
+        if debug:
+            print(f"\nSensore 1: {result1}")
             print(f"\nSensore 2: {result2}")
-        
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            thread_ultrasound3=executor.submit(get_distance, TRIG_PIN_3, ECHO_PIN_3)
-            result3 = thread_ultrasound3.result()
-        
             print(f"\nSensore 3: {result3}")
+
+
 
 
             
