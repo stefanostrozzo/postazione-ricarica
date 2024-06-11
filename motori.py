@@ -4,10 +4,6 @@
 import RPi.GPIO as GPIO
 import time
 
-
-def setup_motor():
-    pass
-
 def movimentazione():
     pass
 
