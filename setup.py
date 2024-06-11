@@ -1,11 +1,15 @@
 #Setup for the entire program
 import RPi.GPIO as GPIO
 import time
-from motori import encoder_count
+#from motori import encoder_count
 
-global pwm1,pwm2,pwm3
+global pwm1,pwm2,pwm3, TRIG_PIN_1, ECHO_PIN_1
+
+def encoder_count():
+  pass
 
 def setup():
+  GPIO.setwarnings(False)
   #GPIO configuration
   GPIO.setmode(GPIO.BCM)
   
@@ -50,12 +54,15 @@ def setup():
   #Setting all I/O
   #Motors
   #PWM
+  GPIO.setup(PWM1,GPIO.OUT)
   pwm1 = GPIO.PWM(PWM1,100)
   pwm1.start(0)
   
+  GPIO.setup(PWM2,GPIO.OUT)
   pwm2 = GPIO.PWM(PWM2,100)
   pwm2.start(0)
 
+  GPIO.setup(PWM3,GPIO.OUT)
   pwm3 = GPIO.PWM(PWM3,100)
   pwm3.start(0)
   #Motors Inputs
@@ -91,7 +98,6 @@ def setup():
   GPIO.setup(ENC2_F2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
   
   #Interrupt
-  #Count function is the function inside motori.py that counts how many times the encoder raises it's value
   #Encoder 1
   GPIO.add_event_detect(ENC1_F1, GPIO.RISING, callback=encoder_count)
   GPIO.add_event_detect(ENC1_F2, GPIO.RISING, callback=encoder_count)
@@ -99,3 +105,5 @@ def setup():
   #Encoder 2
   GPIO.add_event_detect(ENC2_F1, GPIO.RISING, callback=encoder_count)
   GPIO.add_event_detect(ENC2_F2, GPIO.RISING, callback=encoder_count)
+
+print("!Setup completed!")
