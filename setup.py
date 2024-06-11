@@ -1,6 +1,7 @@
 #Setup for the entire program
 import RPi.GPIO as GPIO
 import time
+from motori import encoder_count
 
 def setup():
   #GPIO configuration
@@ -54,9 +55,9 @@ def setup():
   #Interrupt
   #Count function is the function inside motori.py that counts how many times the encoder raises it's value
   #Encoder 1
-  GPIO.add_event_detect(ENC1_F1, GPIO.RISING, callback=count_function)
-  GPIO.add_event_detect(ENC1_F2, GPIO.RISING, callback=count_function)
+  GPIO.add_event_detect(ENC1_F1, GPIO.RISING, callback=encoder_count)
+  GPIO.add_event_detect(ENC1_F2, GPIO.RISING, callback=encoder_count)
   
   #Encoder 2
-  GPIO.add_event_detect(ENC2_F1, GPIO.RISING, callback=count_function)
-  GPIO.add_event_detect(ENC2_F2, GPIO.RISING, callback=count_function)
+  GPIO.add_event_detect(ENC2_F1, GPIO.RISING, callback=encoder_count)
+  GPIO.add_event_detect(ENC2_F2, GPIO.RISING, callback=encoder_count)
