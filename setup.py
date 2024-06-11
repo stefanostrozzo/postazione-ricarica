@@ -59,7 +59,14 @@ def setup():
   pwm3 = GPIO.PWM(PWM3,100)
   pwm3.start(0)
   #Motors Inputs
-  GPIO.setup()
+  GPIO.setup(M1P1,GPIO.OUT)
+  GPIO.setup(M1P2,GPIO.OUT)
+
+  GPIO.setup(M2P1,GPIO.OUT)
+  GPIO.setup(M2P2,GPIO.OUT)
+
+  GPIO.setup(M3P1,GPIO.OUT)
+  GPIO.setup(M3P2,GPIO.OUT)
   
   #Ultrasound sensors
   #Sensor 1
