@@ -1,14 +1,14 @@
-#test
-
 #Libraries import
 import RPi.GPIO as GPIO
 import time
 from ultrasuoni import get_distance
 from motori import *
+from setup import setup
 
 debug=False
 
 if __name__ == "__main__":
+    setup()
     while True:
         result1= get_distance(TRIG_PIN_1,ECHO_PIN_1)
         result2= get_distance(TRIG_PIN_2,ECHO_PIN_2)
