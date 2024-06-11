@@ -3,6 +3,8 @@ import RPi.GPIO as GPIO
 import time
 from motori import encoder_count
 
+global pwm1,pwm2,pwm3
+
 def setup():
   #GPIO configuration
   GPIO.setmode(GPIO.BCM)
@@ -46,6 +48,19 @@ def setup():
   ENC2_F2 = 7
   
   #Setting all I/O
+  #Motors
+  #PWM
+  pwm1 = GPIO.PWM(PWM1,100)
+  pwm1.start(0)
+  
+  pwm2 = GPIO.PWM(PWM2,100)
+  pwm2.start(0)
+
+  pwm3 = GPIO.PWM(PWM3,100)
+  pwm3.start(0)
+  #Motors Inputs
+  GPIO.setup()
+  
   #Ultrasound sensors
   #Sensor 1
   GPIO.setup(TRIG_PIN_1, GPIO.OUT)
