@@ -7,6 +7,22 @@ def setup():
   #GPIO configuration
   GPIO.setmode(GPIO.BCM)
   
+  #Motors
+  #Motor 1
+  PWM1=12
+  M1P1=16 #It means Motor1 Pin1
+  M1P2=20
+  
+  #Motor2
+  PWM2=13
+  M2P1=5
+  M2P2=6
+
+  #Motor3 It's the vertical movement
+  PWM3=11
+  M3P1=10
+  M3P2=9
+  
   #Ultrasound sensors
   #Sensor 1
   TRIG_PIN_1 = 17
